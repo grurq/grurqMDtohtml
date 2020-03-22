@@ -1,4 +1,5 @@
 #### grurqMDtohtml | by grurq (c)2020-
+[更新履歴](grurqMDtohtml-history.html)  
 C#で作られた、markdown記法の変換ソフトです。  
 Windows 10(64bit)のみで動作確認しています。  
 
@@ -50,5 +51,6 @@ DOBON.NET様よりソースコードを多く参考にさせていただきま�
 
 
 ---
-公式サイト　grurqApps
+このページの最終更新　2020-02-22  
+公式サイト　grurqApps  
 <https://grurq.github.io/>

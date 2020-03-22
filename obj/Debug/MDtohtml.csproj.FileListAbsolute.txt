@@ -1,0 +1,9 @@
+E:\Gateway\repos\MDtohtml\bin\Debug\MDtohtml.exe
+E:\Gateway\repos\MDtohtml\bin\Debug\MDtohtml.exe.config
+E:\Gateway\repos\MDtohtml\bin\Debug\MDtohtml.pdb
+E:\Gateway\repos\MDtohtml\obj\Debug\MDtohtml.csprojAssemblyReference.cache
+E:\Gateway\repos\MDtohtml\obj\Debug\MDtohtml.Form1.resources
+E:\Gateway\repos\MDtohtml\obj\Debug\MDtohtml.Properties.Resources.resources
+E:\Gateway\repos\MDtohtml\obj\Debug\MDtohtml.csproj.GenerateResource.cache
+E:\Gateway\repos\MDtohtml\obj\Debug\MDtohtml.exe
+E:\Gateway\repos\MDtohtml\obj\Debug\MDtohtml.pdb
