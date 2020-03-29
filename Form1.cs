@@ -21,9 +21,12 @@ namespace MDtohtml
         private void Form1_Load(object sender, EventArgs e)
         {
             
+
             string rtntext;
             string writeextension="html";
-            
+            linkLabel1.Links.Add(0, linkLabel1.Text.Length, "https://grurq.github.io/");
+            linkLabel2.Links.Add(0, linkLabel2.Text.Length, "https://grurq.github.io/grurqMDtohtml.html");
+            linkLabel3.Links.Add(0, linkLabel3.Text.Length, "https://grurq.github.io/grurqMDtohtml-history.html");
             int i;
 
             if (Properties.Settings.Default.newfileadd == "") {
@@ -206,6 +209,19 @@ namespace MDtohtml
             Properties.Settings.Default.Save();
         }
 
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkLabel1.Links[0].LinkData.ToString());
+        }
 
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkLabel3.Links[0].LinkData.ToString());
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkLabel2.Links[0].LinkData.ToString());
+        }
     }
 }

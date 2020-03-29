@@ -20,29 +20,6 @@ namespace MDtohtml
 
         }
 
-        public string hn1_2(string txt)
-        {
-            
-            string[] row = txt.Split(new char[]{'\n'});
-            int h, i;
-            Regex[] hn= { new Regex(@"[\S]+", RegexOptions.Multiline), new Regex("^[=].*", RegexOptions.Multiline) ,new Regex("^[-].*", RegexOptions.Multiline)};
-
-            for(i = 1; i < row.Length; i++){
-                for (h = 1; h < 3; h++){
-                    if (hn[h].IsMatch(row[i])&& hn[0].IsMatch(row[i-1])){
-                        row[i] = "\r";
-                        row[i-1] = "<h" + h.ToString() + ">" + row[i-1];
-                        row[i - 1] = row[i - 1].Insert(row[i-1].Length-1, "</h" + h.ToString() + ">\r");
-                    }
-                }
-            }
-            for (i = 1; i < row.Length; i++) row[0] += row[i]+"\n";
-
-
-                return row[0];
-        }
-
-
         public void p(ref string txt)
         {
             Regex regex = new Regex("(\r\n\r\n)(.+?)(\r\n\r\n)", RegexOptions.Singleline);
@@ -55,6 +32,30 @@ namespace MDtohtml
         {
             txt = Regex.Replace(txt, "(  \r\n)", "<br>\r\n", RegexOptions.Singleline);
         }
+        public string hn1_2(string txt)
+        {
+
+            string[] row = txt.Split(new char[] { '\n' });
+            int h, i;
+            Regex[] hn = { new Regex(@"[\S]+?", RegexOptions.Multiline), new Regex("^[=].*", RegexOptions.Multiline), new Regex("^[-].*", RegexOptions.Multiline) };
+
+            for (i = 1; i < row.Length; i++)
+            {
+                for (h = 1; h < 3; h++)
+                {
+                    if (hn[h].IsMatch(row[i]) && hn[0].IsMatch(row[i - 1]))
+                    {
+                        row[i] = "\r";
+                        row[i - 1] = "<h" + h.ToString() + ">" + row[i - 1];
+                        row[i - 1] = row[i - 1].Insert(row[i - 1].Length - 1, "</h" + h.ToString() + ">\r");
+                    }
+                }
+            }
+            for (i = 1; i < row.Length; i++) row[0] += "\n" + row[i];
+
+
+            return row[0] + "\n";
+        }
         public void hn(ref string txt)
         {
             int h;
@@ -63,7 +64,7 @@ namespace MDtohtml
             string he = "";
             string hx = "";
 
-            //txt = hn1_2(txt);
+            
             for (h = 1; h < 8; h++)
             {
                 hn = String.Concat("#" + hn);
@@ -71,11 +72,10 @@ namespace MDtohtml
                 he = " " + hn;
                 hx = "h"+h.ToString();
                 //# ... # のための
-                    //txt = Regex.Replace(txt, "^(" + hs + ")(.*)(" + he + ")", "<" + hx + ">$2</"+hx + ">\r\n", RegexOptions.Multiline);
- 
-                //txt = Regex.Replace(txt, "^(" + hs + ")(.*)", "<" + hx + ">$2</"+hx + ">\r\n", RegexOptions.Multiline);
+                txt = Regex.Replace(txt, @"(^(" + hs + ")(.+))("+he+")", "<" + hx + ">$3</" + hx + ">\r\n", RegexOptions.Multiline);
+
                 txt = Regex.Replace(txt, @"(^(" + hs + ")(.+))", "<" + hx + ">$3</"+hx + ">\r\n", RegexOptions.Multiline);
-                //txt = Regex.Replace(txt, "(<" + hx+ ">)(.+)(" + he+"</"+hx+">)$","$1$2</"+hx+">",RegexOptions.Multiline);
+                
 
             }
 
@@ -500,9 +500,6 @@ namespace MDtohtml
             List<String> keys = new List<String>();
 
             // 下記の順番は意味を持つ。ずらさないこと。
-     
-
-            // 下記の順番は意味を持つ。ずらさないこと。
             code(ref text, ref codes, ref keys);
             urlorimg(ref text);
 
@@ -511,7 +508,7 @@ namespace MDtohtml
             blockquote(ref text);
 
             ulol(ref text);
-
+            text=hn1_2(text);
             hn(ref text);
             hr(ref text);
             emstrong(ref text, underline, bold);
@@ -520,27 +517,6 @@ namespace MDtohtml
 
             codereput(ref text, ref codes, ref keys);
 
-            /*
-             code(ref text,ref codes,ref keys);
-            
-            urlorimg(ref text);
-            emstrong(ref text, underline, bold);
-
-            p(ref text);
-            br(ref text);
-            blockquote(ref text);
-            
-            ulol(ref text);
-
-            text = hn1_2(text);
-            hn(ref text);
-            hr(ref text);
-
-
-            table(ref text);
-
-            codereput(ref text, ref codes, ref keys);
-            */
             return text;
              
 
