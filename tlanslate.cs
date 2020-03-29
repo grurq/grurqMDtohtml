@@ -20,21 +20,28 @@ namespace MDtohtml
 
         }
 
-        public void rptag1(ref string text, string chtag, string rptag)
+        public string hn1_2(string txt)
         {
-
             
-            var rppattern = "(^(" + chtag + ")(.+))";
-            var rptags = "<" + rptag + ">$3</" + rptag + ">\r\n";
-            //(^(# )(.+)) なら<h1>$2</h1>
-            text = Regex.Replace(text, @rppattern, rptags, RegexOptions.Multiline);
+            string[] row = txt.Split(new char[]{'\n'});
+            int h, i;
+            Regex[] hn= { new Regex(@"[\S]+", RegexOptions.Multiline), new Regex("^[=].*", RegexOptions.Multiline) ,new Regex("^[-].*", RegexOptions.Multiline)};
 
-        }
-        public bool rptag1(string txt, string chtag)
-        {
+            for(i = 1; i < row.Length; i++){
+                for (h = 1; h < 3; h++){
+                    if (hn[h].IsMatch(row[i])&& hn[0].IsMatch(row[i-1])){
+                        row[i] = "\r";
+                        row[i-1] = "<h" + h.ToString() + ">" + row[i-1];
+                        row[i - 1] = row[i - 1].Insert(row[i-1].Length-1, "</h" + h.ToString() + ">\r");
+                    }
+                }
+            }
+            for (i = 1; i < row.Length; i++) row[0] += row[i]+"\n";
 
-            return Regex.IsMatch(txt, @"(^(" + chtag + ")(.+))", RegexOptions.Multiline);
+
+                return row[0];
         }
+
 
         public void p(ref string txt)
         {
@@ -52,20 +59,35 @@ namespace MDtohtml
         {
             int h;
             string hn = "";
+            string hs = "";
+            string he = "";
+            string hx = "";
 
+            //txt = hn1_2(txt);
             for (h = 1; h < 8; h++)
             {
                 hn = String.Concat("#" + hn);
-                if (rptag1(txt, hn + " ")) rptag1(ref txt, hn + " ", "h" + h.ToString());
+                hs = hn + " ";
+                he = " " + hn;
+                hx = "h"+h.ToString();
+                //# ... # のための
+                    //txt = Regex.Replace(txt, "^(" + hs + ")(.*)(" + he + ")", "<" + hx + ">$2</"+hx + ">\r\n", RegexOptions.Multiline);
+ 
+                //txt = Regex.Replace(txt, "^(" + hs + ")(.*)", "<" + hx + ">$2</"+hx + ">\r\n", RegexOptions.Multiline);
+                txt = Regex.Replace(txt, @"(^(" + hs + ")(.+))", "<" + hx + ">$3</"+hx + ">\r\n", RegexOptions.Multiline);
+                //txt = Regex.Replace(txt, "(<" + hx+ ">)(.+)(" + he+"</"+hx+">)$","$1$2</"+hx+">",RegexOptions.Multiline);
+
             }
+
+
 
 
         }
         public void hr(ref string txt)
         {
-            string[] pattern = { "(-)", "(- )", "(\\*)", "(\\* )" };
+            string[] pattern = { "(-)", "(- )", "(_)", "(_ )", "(\\*)", "(\\* )" };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 6; i++)
             {
                 txt = Regex.Replace(txt, @pattern[i] + "{3,}(\r\n)", "<hr>$2", RegexOptions.Multiline);
             }
@@ -85,6 +107,7 @@ namespace MDtohtml
                 if (bold) replaced[i] = Regex.Replace(replaced[i], "strong>", "b>", RegexOptions.None);
                 txt = Regex.Replace(txt, matching + @"(.*?)" + matching, replaced[i], RegexOptions.Multiline);
             }
+            txt = Regex.Replace(txt, @"(~~)(.*?)(~~)", "<s>$2</s>", RegexOptions.Multiline);
 
 
         }
@@ -131,6 +154,7 @@ namespace MDtohtml
             stt = 0;
             stp = 0;
             string rptext;
+            txt += "\r\n";
 
             string[] row = txt.Split('\n');
             bool block1, block2;
@@ -196,7 +220,7 @@ namespace MDtohtml
 
                 }
             } while (block2 == true);
-
+            if (row[row.Length - 1] == "\r") row[row.Length - 1] = "";
 
             for (i = 0; i < row.Length; i++)
             {
@@ -312,9 +336,6 @@ namespace MDtohtml
             Regex rgx1 = new Regex(@"^(\[\^)(.*?)(\]\:)(.*)",RegexOptions.Multiline);
             Regex rgx2 = new Regex(@"(\[\^)(.*?)(\])(.*)", RegexOptions.Multiline);
 
-
-
-
             string anchortext = "";
     
 
@@ -350,7 +371,7 @@ namespace MDtohtml
 
                     // Regex rgx3 = new Regex(@" ^ (\[\^)(.*?)(\])(.*)", RegexOptions.Multiline);
 
-                    txt = rgx2.Replace(txt,"<a href=\"#$2\">" + h.ToString() + "</a>$4", 1);
+                    txt = rgx2.Replace(txt,"<a href=\"#$2\">^" + h.ToString() + "</a>$4", 1);
 
                     //txt = Regex.Replace(txt,anchortext, "<a href=\"#$2\">" + h.ToString() + "</a>", RegexOptions.Multiline);
                     // txt = Regex.Replace(txt, anchortext, "<a href=\"#$2\">" + h.ToString()+"</a>",RegexOptions.Multiline);
@@ -401,7 +422,6 @@ namespace MDtohtml
             txt = String.Join("\r\n", row);
         }
 
-
         public int ctchar(string txt)
         {
             string[] cell = txt.Trim().Split('|');
@@ -435,7 +455,6 @@ namespace MDtohtml
             }
             return alns;
         }
-
 
         public string tbcells(string txt, string aln, string tc)
         {
@@ -479,15 +498,18 @@ namespace MDtohtml
         {
             List<String> codes = new List<String>();
             List<String> keys = new List<String>();
-            
+
             // 下記の順番は意味を持つ。ずらさないこと。
-            code(ref text,ref codes,ref keys);
+     
+
+            // 下記の順番は意味を持つ。ずらさないこと。
+            code(ref text, ref codes, ref keys);
             urlorimg(ref text);
 
             p(ref text);
             br(ref text);
             blockquote(ref text);
-            
+
             ulol(ref text);
 
             hn(ref text);
@@ -498,7 +520,30 @@ namespace MDtohtml
 
             codereput(ref text, ref codes, ref keys);
 
+            /*
+             code(ref text,ref codes,ref keys);
+            
+            urlorimg(ref text);
+            emstrong(ref text, underline, bold);
+
+            p(ref text);
+            br(ref text);
+            blockquote(ref text);
+            
+            ulol(ref text);
+
+            text = hn1_2(text);
+            hn(ref text);
+            hr(ref text);
+
+
+            table(ref text);
+
+            codereput(ref text, ref codes, ref keys);
+            */
             return text;
+             
+
         }
 
 
