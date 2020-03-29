@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Reflection;
 
 namespace MDtohtml
 {
@@ -20,13 +21,24 @@ namespace MDtohtml
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            var asb = Assembly.GetExecutingAssembly();
+            AssemblyName nm = asb.GetName();
+            product.Text = nm.Name.ToString();
+            a_version.Text ="ver:   "+ nm.Version.ToString();
             
 
-            string rtntext;
-            string writeextension="html";
+            
+            
             linkLabel1.Links.Add(0, linkLabel1.Text.Length, "https://grurq.github.io/");
             linkLabel2.Links.Add(0, linkLabel2.Text.Length, "https://grurq.github.io/grurqMDtohtml.html");
             linkLabel3.Links.Add(0, linkLabel3.Text.Length, "https://grurq.github.io/grurqMDtohtml-history.html");
+            linkLabel4.Links.Add(0, linkLabel4.Text.Length, "https://opensource.org/licenses/mit-license.php");
+            linkLabel5.Links.Add(0, linkLabel5.Text.Length, "https://ja.osdn.net/projects/opensource/wiki/licenses%2FMIT_license");
+
+
+
+            string writeextension = "html";
+            string rtntext;
             int i;
 
             if (Properties.Settings.Default.newfileadd == "") {
@@ -222,6 +234,16 @@ namespace MDtohtml
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabel2.Links[0].LinkData.ToString());
+        }
+
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkLabel4.Links[0].LinkData.ToString());
+        }
+
+        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(linkLabel5.Links[0].LinkData.ToString());
         }
     }
 }

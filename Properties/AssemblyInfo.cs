@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // 制御されます。アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更します。
-[assembly: AssemblyTitle("MDtohtml")]
+[assembly: AssemblyTitle("grurqMDtohtml")]
 [assembly: AssemblyDescription("ドラッグ＆ドロップ方式で動作するMakdown変換プログラム")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("grurqApps")]
-[assembly: AssemblyProduct("MDtohtml")]
-[assembly: AssemblyCopyright("Copyright ©  2020　grurqApps")]
+[assembly: AssemblyProduct("grurqMDtohtml")]
+[assembly: AssemblyCopyright("Copyright ©  2020 grurqApps  Released under the MIT license")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
