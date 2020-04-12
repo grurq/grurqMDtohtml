@@ -147,16 +147,72 @@ namespace MDtohtml
                 txt = Regex.Replace(txt, keys[i], codes[i], RegexOptions.Singleline);
             }
         }
-        public void ulol(ref string txt)
+
+        public string ulol2(string txt)
         {
-            int h, i, rgx, stt, stp;
+            //3段階以上のリスト化を可能にするためのメソッド
+            //基層メソッド
+            string[] row = txt.Split('\n');
+
+            string rplin = "";
+            string rplin2 = "";
+
+            int h, i, rpls;
+
+            rpls = -1;
+
+            for (i = 0; i < row.Length; i++)
+            {
+                if (Regex.IsMatch(row[i], "^(\\d{1,}\\. |- )"))
+                {
+
+
+                    rplin += row[i] + "\n";
+                    row[i] = "";
+                    rpls = i;
+                }
+                if (rplin.Length > 0)
+                {
+                    if (Regex.IsMatch(row[i], "^((\t| )*(\\d{1,}\\. |- ))"))
+                    {
+                        rplin += row[i] + "\n";
+                        row[i] = "";
+                    }
+                    else
+                    {
+                        do
+                        {
+                            rplin2 = rplin;
+                           ulol(ref rplin);
+                        }
+                        while (rplin2 != rplin);
+                        row[rpls] = rplin;
+                        row[i] += "\n" + rplin;
+                        rplin = "";
+
+                    }
+
+                }
+            }
+            for (i = 0; i < row.Length; i++)
+            {
+                if (row[i].EndsWith("\r")) row[i] += "\n";
+                if (i > 0) row[0] += row[i];
+            }
+            return row[0];
+        }
+        public bool ulol(ref string txt)
+        {
+            int h, i,rgx, stt, stp;
             rgx = 0;
-            stt = 0;
+            stt = -1;
             stp = 0;
+            
             string rptext;
 
             string[] row = txt.Split('\n');
-            bool block1, block2;
+            bool block1, block2,replaced;
+            replaced = false;
             string[] rgxkey = { "(\\d{1,}\\. )", "(- )", "^(    )", "^(\t)" };
 
             string[] rgxtag = { "<ol>", "<ul>", "</ol>", "</ul>" };
@@ -183,10 +239,20 @@ namespace MDtohtml
                                         block1 = true;
 
                                         row[i] = Regex.Replace(row[i], "^" + rgxkey[h] + "(.+)", "\r\n<li>$2</li>");
-                                        row[stt] = rgxtag[rgx] + "\r\n" + row[stt] + "\r";
+                                        row[stt] = rgxtag[rgx] + "\r\n" + row[stt] +"\r";
+                                        replaced = true;
+                                        
                                     }
                                 }
                             }
+                            if (Regex.IsMatch(row[i], "^(\t| ){1,}(\\d{1,}\\. |- )")==true)
+                            {
+
+                                    row[i] = Regex.Replace(row[i], "^(\t)", "    ");
+                                    row[i] = Regex.Replace(row[i], "^( )", "");
+                                replaced = true;
+                            }
+
                             break;
 
                         case true:
@@ -196,20 +262,17 @@ namespace MDtohtml
                             }
                             else if (Regex.IsMatch(row[i], "^(\t|    ){1,}(\\d{1,}\\. |- )"))
                             {
-                                for (h = 2; h < 4; h++)
-                                {
-                                    row[i] = Regex.Replace(row[i], "^(\t)", "");
-                                    row[i] = Regex.Replace(row[i], "^(    )", "");
-                                }
+                                    row[i] = Regex.Replace(row[i], "^(\t)", "    ");
+                                    row[i] = Regex.Replace(row[i], "^( )", "");
                             }
                             else
                             {
-
+                                
                                 stp = i;
                                 row[stp - 1] += "\r\n" + rgxtag[rgx + 2] + "\r";
                                 block1 = false;
                                 block2 = true;
-
+                                stt = -1;
 
 
                             }
@@ -228,6 +291,8 @@ namespace MDtohtml
 
             }
             txt = rptext;
+
+            return replaced;
 
         }
         public void insli(ref string[] text, string sptxt, int strow, int endrow)
@@ -506,7 +571,7 @@ namespace MDtohtml
             br(ref text);
             blockquote(ref text);
 
-            ulol(ref text);
+            while(ulol(ref text));
 
             hn(ref text);
             text=hn1_2(text);
