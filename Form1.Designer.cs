@@ -30,9 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+            this.a_version = new System.Windows.Forms.Label();
+            this.copyright = new System.Windows.Forms.Label();
+            this.product = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.buttonsave = new System.Windows.Forms.Button();
             this.buttonundo = new System.Windows.Forms.Button();
@@ -56,14 +64,7 @@
             this.radioButtonhtm = new System.Windows.Forms.RadioButton();
             this.radioButtonhtml = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.copyright = new System.Windows.Forms.Label();
-            this.a_version = new System.Windows.Forms.Label();
-            this.product = new System.Windows.Forms.Label();
-            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.updated = new System.Windows.Forms.Label();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -76,6 +77,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.updated);
             this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.linkLabel1);
@@ -93,6 +95,49 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "概要";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(84, 249);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(62, 12);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "公式サイト：";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(46, 78);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(167, 12);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Released under the MIT license";
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Font = new System.Drawing.Font("MS UI Gothic", 9F);
+            this.linkLabel1.Location = new System.Drawing.Point(152, 249);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(32, 12);
+            this.linkLabel1.TabIndex = 0;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "index";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.textBox1.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.textBox1.Location = new System.Drawing.Point(48, 106);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(321, 127);
+            this.textBox1.TabIndex = 8;
+            this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // linkLabel3
             // 
@@ -118,17 +163,55 @@
             this.linkLabel2.Text = "ソフト説明";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
-            // linkLabel1
+            // linkLabel5
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Font = new System.Drawing.Font("MS UI Gothic", 9F);
-            this.linkLabel1.Location = new System.Drawing.Point(152, 249);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(32, 12);
-            this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "index";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel5.AutoSize = true;
+            this.linkLabel5.Location = new System.Drawing.Point(304, 78);
+            this.linkLabel5.Name = "linkLabel5";
+            this.linkLabel5.Size = new System.Drawing.Size(65, 12);
+            this.linkLabel5.TabIndex = 5;
+            this.linkLabel5.TabStop = true;
+            this.linkLabel5.Text = "（日本語訳）";
+            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
+            // 
+            // linkLabel4
+            // 
+            this.linkLabel4.AutoSize = true;
+            this.linkLabel4.Location = new System.Drawing.Point(232, 78);
+            this.linkLabel4.Name = "linkLabel4";
+            this.linkLabel4.Size = new System.Drawing.Size(64, 12);
+            this.linkLabel4.TabIndex = 4;
+            this.linkLabel4.TabStop = true;
+            this.linkLabel4.Text = "MIT license";
+            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
+            // 
+            // a_version
+            // 
+            this.a_version.AutoSize = true;
+            this.a_version.Location = new System.Drawing.Point(46, 42);
+            this.a_version.Name = "a_version";
+            this.a_version.Size = new System.Drawing.Size(52, 12);
+            this.a_version.TabIndex = 6;
+            this.a_version.Text = "a_version";
+            // 
+            // copyright
+            // 
+            this.copyright.AutoSize = true;
+            this.copyright.Location = new System.Drawing.Point(46, 66);
+            this.copyright.Name = "copyright";
+            this.copyright.Size = new System.Drawing.Size(162, 12);
+            this.copyright.TabIndex = 5;
+            this.copyright.Text = "Copyright ©  2020 grurqApps  ";
+            // 
+            // product
+            // 
+            this.product.AutoSize = true;
+            this.product.Font = new System.Drawing.Font("MS UI Gothic", 15F, System.Drawing.FontStyle.Bold);
+            this.product.Location = new System.Drawing.Point(44, 17);
+            this.product.Name = "product";
+            this.product.Size = new System.Drawing.Size(80, 20);
+            this.product.TabIndex = 4;
+            this.product.Text = "product";
             // 
             // tabPage2
             // 
@@ -397,86 +480,14 @@
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 8;
             // 
-            // copyright
+            // updated
             // 
-            this.copyright.AutoSize = true;
-            this.copyright.Location = new System.Drawing.Point(46, 66);
-            this.copyright.Name = "copyright";
-            this.copyright.Size = new System.Drawing.Size(162, 12);
-            this.copyright.TabIndex = 5;
-            this.copyright.Text = "Copyright ©  2020 grurqApps  ";
-            // 
-            // a_version
-            // 
-            this.a_version.AutoSize = true;
-            this.a_version.Location = new System.Drawing.Point(46, 54);
-            this.a_version.Name = "a_version";
-            this.a_version.Size = new System.Drawing.Size(52, 12);
-            this.a_version.TabIndex = 6;
-            this.a_version.Text = "a_version";
-            // 
-            // product
-            // 
-            this.product.AutoSize = true;
-            this.product.Font = new System.Drawing.Font("MS UI Gothic", 15F, System.Drawing.FontStyle.Bold);
-            this.product.Location = new System.Drawing.Point(44, 17);
-            this.product.Name = "product";
-            this.product.Size = new System.Drawing.Size(80, 20);
-            this.product.TabIndex = 4;
-            this.product.Text = "product";
-            // 
-            // linkLabel4
-            // 
-            this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(232, 78);
-            this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(64, 12);
-            this.linkLabel4.TabIndex = 4;
-            this.linkLabel4.TabStop = true;
-            this.linkLabel4.Text = "MIT license";
-            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel4_LinkClicked);
-            // 
-            // linkLabel5
-            // 
-            this.linkLabel5.AutoSize = true;
-            this.linkLabel5.Location = new System.Drawing.Point(304, 78);
-            this.linkLabel5.Name = "linkLabel5";
-            this.linkLabel5.Size = new System.Drawing.Size(65, 12);
-            this.linkLabel5.TabIndex = 5;
-            this.linkLabel5.TabStop = true;
-            this.linkLabel5.Text = "（日本語訳）";
-            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.textBox1.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.textBox1.Location = new System.Drawing.Point(48, 106);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(321, 127);
-            this.textBox1.TabIndex = 8;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(46, 78);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(167, 12);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Released under the MIT license";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(84, 249);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 12);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "公式サイト：";
+            this.updated.AutoSize = true;
+            this.updated.Location = new System.Drawing.Point(46, 54);
+            this.updated.Name = "updated";
+            this.updated.Size = new System.Drawing.Size(45, 12);
+            this.updated.TabIndex = 11;
+            this.updated.Text = "updated";
             // 
             // Form1
             // 
@@ -544,6 +555,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label updated;
     }
 }
 

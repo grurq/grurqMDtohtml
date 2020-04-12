@@ -17,13 +17,25 @@ namespace MDtohtml
         {
              
         }
+        private void Ending(object sender, EventArgs e)
+        {
 
+            Properties.Settings.Default.Save();
+            Application.ApplicationExit -= new EventHandler(Ending);
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            
             var asb = Assembly.GetExecutingAssembly();
+
+
+
+
             AssemblyName nm = asb.GetName();
             product.Text = nm.Name.ToString();
+            updated.Text = "Last updated:   " + File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString();
             a_version.Text ="ver:   "+ nm.Version.ToString();
             
 
@@ -120,7 +132,7 @@ namespace MDtohtml
             }
             else
             {
-               
+                Application.ApplicationExit += new EventHandler(this.Ending);
             }
         }
 

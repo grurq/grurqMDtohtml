@@ -147,111 +147,90 @@ namespace MDtohtml
                 txt = Regex.Replace(txt, keys[i], codes[i], RegexOptions.Singleline);
             }
         }
-        public string ulol(string txt){
+        public void ulol(ref string txt)
+        {
+            int h, i, rgx, stt, stp;
+            rgx = 0;
+            stt = 0;
+            stp = 0;
+            string rptext;
+
             string[] row = txt.Split('\n');
-            
-            string rplin = "";
-            string rplin2 = "";
+            bool block1, block2;
+            string[] rgxkey = { "(\\d{1,}\\. )", "(- )", "^(    )", "^(\t)" };
 
-            int h, i, rpls;
-            
-            rpls = -1;
-            
-            for (i = 0;i< row.Length; i++){
-                if (Regex.IsMatch(row[i], "^(\\d{1,}\\. |- )")){
-                    
-                    
-                    rplin += row[i]+"\n";
-                    row[i] = "";
-                }
-                if (rplin.Length>0){
-                    if (Regex.IsMatch(row[i], "^((\t| )*(\\d{1,}\\. |- ))")){
-                        rplin += row[i] + "\n";
-                        row[i] = "";
-                    }
-                    else{
-                        do
-                        {
-                            rplin2 = rplin;
-                            rplin = ulol2(rplin);
-                        }
-                        while (rplin2 != ulol2(rplin));
-                        row[i] += "\n"+rplin;
-                        rplin = "";
+            string[] rgxtag = { "<ol>", "<ul>", "</ol>", "</ul>" };
 
-                    }
-                    
-            }
-            }
-            for (i = 0;i< row.Length; i++)
+            rptext = "";
+            do
             {
-                if (row[i].EndsWith("\r")) row[i] += "\n";
-                if (i > 0) row[0] += row[i];
-            }
-            return row[0];
-        }
-public string ulol2(string txt)
-
-{
-
-    string[] row = txt.Split('\n');
-            string newtxt, uo,oldtxt;
-            oldtxt = txt;
-    int h, i, rpls;
- 
-                newtxt = "";
-                uo = "";
-                rpls = -1;
+                block1 = false;
+                block2 = false;
                 for (i = 0; i < row.Length; i++)
                 {
-                    if (row[i].StartsWith("\t"))
+                    switch (block1)
                     {
-                        row[i] = row[i].Remove(0, 1);
-                        row[i] = "    " + row[i];
-                    }
-                }
 
-                for (i = 0; i < row.Length; i++)
-                {
-                    if (Regex.IsMatch(row[i], "^(\\d{1,}\\. |- )"))
-                    {
-                        if (rpls < 0) uo = Regex.IsMatch(row[i], "^(\\d{1,}\\. )") ? "ol" : "ul";
-                        row[i] = Regex.Replace(row[i], "^(\\d{1,}\\. |- )(.+)", "<li>$2</li>\r");
-                        if (rpls < 0)
-                        {
-                            row[i] = " " + row[i];
-                            for (h = i; h >= 0; h--)
+                        case false:
+                            if (Regex.IsMatch(row[i], "^(\\d{1,}\\. |- )"))
                             {
-                                if (!Regex.IsMatch(row[h], "^ "))
+                                for (h = 0; h < 2; h++)
                                 {
-                                    row[h] = (h == 0) ? "<" + uo + ">/r/n" + row[i] : row[h] + "\n < " + uo + " >\r";
-                                    break;
+                                    if (Regex.IsMatch(row[i], "^" + rgxkey[h]))
+                                    {
+                                        rgx = h;
+                                        stt = i;
+                                        block1 = true;
+
+                                        row[i] = Regex.Replace(row[i], "^" + rgxkey[h] + "(.+)", "\r\n<li>$2</li>");
+                                        row[stt] = rgxtag[rgx] + "\r\n" + row[stt] + "\r";
+                                    }
                                 }
                             }
-                            row[i] = row[i].Remove(0, 1);
-                            rpls = i;
-                        }
+                            break;
 
-                    }
-                    else
-                    {
-                        if (rpls >= 0)
-                        {
-                            rpls = -1;
-                            row[i] = "</" + uo + ">" + row[i];
-                        }
-                        if (row[i].StartsWith(" ")) row[i] = row[i].Remove(0, 1);
+                        case true:
+                            if (Regex.IsMatch(row[i], "^" + rgxkey[rgx]))
+                            {
+                                row[i] = Regex.Replace(row[i], "^" + rgxkey[rgx] + "(.+)", "<li>$2</li>\r");
+                            }
+                            else if (Regex.IsMatch(row[i], "^(\t|    ){1,}(\\d{1,}\\. |- )"))
+                            {
+                                for (h = 2; h < 4; h++)
+                                {
+                                    row[i] = Regex.Replace(row[i], "^(\t)", "");
+                                    row[i] = Regex.Replace(row[i], "^(    )", "");
+                                }
+                            }
+                            else
+                            {
 
+                                stp = i;
+                                row[stp - 1] += "\r\n" + rgxtag[rgx + 2] + "\r";
+                                block1 = false;
+                                block2 = true;
+
+
+
+                            }
+
+                            break;
                     }
 
                 }
-                if (rpls < 0) row[row.Length - 1] += "\n" + "</" + uo + ">/r";
-                for (i = 0; i < row.Length; i++) row[i] += "\n";
-                for (i = 0; i < row.Length; i++) newtxt += row[i];
-            
-    return newtxt = (oldtxt==newtxt)?oldtxt:ulol(newtxt);
-}
-public void insli(ref string[] text, string sptxt, int strow, int endrow)
+            } while (block2 == true);
+
+
+            for (i = 0; i < row.Length; i++)
+            {
+                row[i] = Regex.Replace(row[i], "((\r)|\n)$", "\r\n");
+                rptext += row[i];
+
+            }
+            txt = rptext;
+
+        }
+        public void insli(ref string[] text, string sptxt, int strow, int endrow)
         {
             string[] row = sptxt.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
@@ -527,9 +506,10 @@ public void insli(ref string[] text, string sptxt, int strow, int endrow)
             br(ref text);
             blockquote(ref text);
 
-            text=ulol(text);
-            text=hn1_2(text);
+            ulol(ref text);
+
             hn(ref text);
+            text=hn1_2(text);
             hr(ref text);
             emstrong(ref text, underline, bold);
 
