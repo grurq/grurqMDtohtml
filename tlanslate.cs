@@ -180,14 +180,9 @@ namespace MDtohtml
                     }
                     else
                     {
-                        do
-                        {
-                            rplin2 = rplin;
-                           ulol(ref rplin);
-                        }
-                        while (rplin2 != rplin);
+                        while(ulol(ref rplin));
                         row[rpls] = rplin;
-                        row[i] += "\n" + rplin;
+                        
                         rplin = "";
 
                     }
@@ -238,18 +233,18 @@ namespace MDtohtml
                                         stt = i;
                                         block1 = true;
 
-                                        row[i] = Regex.Replace(row[i], "^" + rgxkey[h] + "(.+)", "\r\n<li>$2</li>");
+                                        row[i] = Regex.Replace(row[i], "^" + rgxkey[h] + "(.+)", "\r\n<li>$2</li>\r");
                                         row[stt] = rgxtag[rgx] + "\r\n" + row[stt] +"\r";
                                         replaced = true;
                                         
                                     }
                                 }
                             }
-                            if (Regex.IsMatch(row[i], "^(\t| ){1,}(\\d{1,}\\. |- )")==true)
+                            if (Regex.IsMatch(row[i], @"^(\s+)(\d{1,}\. |- )"))
                             {
 
-                                    row[i] = Regex.Replace(row[i], "^(\t)", "    ");
-                                    row[i] = Regex.Replace(row[i], "^( )", "");
+                                if(row[i].StartsWith("\t"))row[i] ="   "+ row[i].Substring(1,row[i].Length-1);
+                                if(row[i].StartsWith(" ")) row[i] = row[i].Substring(1, row[i].Length - 1);
                                 replaced = true;
                             }
 
@@ -260,10 +255,11 @@ namespace MDtohtml
                             {
                                 row[i] = Regex.Replace(row[i], "^" + rgxkey[rgx] + "(.+)", "<li>$2</li>\r");
                             }
-                            else if (Regex.IsMatch(row[i], "^(\t|    ){1,}(\\d{1,}\\. |- )"))
+                            else if (Regex.IsMatch(row[i], @"^(\s+)(\d{1,}\. |- )"))
                             {
-                                    row[i] = Regex.Replace(row[i], "^(\t)", "    ");
-                                    row[i] = Regex.Replace(row[i], "^( )", "");
+                                if (row[i].StartsWith("\t")) row[i] = "   " + row[i].Substring(1, row[i].Length - 1);
+                                if (row[i].StartsWith(" ")) row[i] = row[i].Substring(1, row[i].Length - 1);
+                                replaced = true;
                             }
                             else
                             {
