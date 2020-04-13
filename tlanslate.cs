@@ -32,19 +32,33 @@ namespace MDtohtml
         {
             txt = Regex.Replace(txt, "(  \r\n)", "<br>\r\n", RegexOptions.Singleline);
         }
+        
+         public string trimemptyrows(string txt)
+        {
+
+            string[] row = txt.Split(new char[] { '\n' });
+            int i;
+            string newtxt="";
+            for (i = 0; i < row.Length; i++) if(!Regex.IsMatch(row[i],@"\S"))row[i]="";
+            for (i = 0; i < row.Length; i++)if(row[i].EndsWith("\r"))newtxt+= row[i]+"\n";
+            return newtxt;
+        }
         public string hn1_2(string txt)
         {
 
             string[] row = txt.Split(new char[] { '\n' });
+            
             int h, i;
-            Regex[] hn = { new Regex(@"[\S]+?", RegexOptions.Multiline), new Regex("^[=].*", RegexOptions.Multiline), new Regex("^[-].*", RegexOptions.Multiline) };
+
+            Regex[] hn = { new Regex(@"[=]+\r", RegexOptions.Multiline), new Regex(@"[-]+\r", RegexOptions.Multiline) };
 
             for (i = 1; i < row.Length; i++)
             {
-                for (h = 1; h < 3; h++)
+                for (h = 0; h < hn.Length; h++)
                 {
-                    if (hn[h].IsMatch(row[i]) && hn[0].IsMatch(row[i - 1]))
+                    if (hn[h].IsMatch(row[i]) && Regex.IsMatch(row[i-1], @"\S",RegexOptions.Singleline))
                     {
+
                         row[i] = "\r";
                         row[i - 1] = "<h" + h.ToString() + ">" + row[i - 1];
                         row[i - 1] = row[i - 1].Insert(row[i - 1].Length - 1, "</h" + h.ToString() + ">\r");
@@ -155,9 +169,8 @@ namespace MDtohtml
             string[] row = txt.Split('\n');
 
             string rplin = "";
-            string rplin2 = "";
 
-            int h, i, rpls;
+            int i, rpls;
 
             rpls = -1;
 
@@ -563,18 +576,21 @@ namespace MDtohtml
             code(ref text, ref codes, ref keys);
             urlorimg(ref text);
 
+            hn(ref text);
+            text = hn1_2(text);
+            hr(ref text);
+
             p(ref text);
             br(ref text);
             blockquote(ref text);
 
             while(ulol(ref text));
 
-            hn(ref text);
-            text=hn1_2(text);
-            hr(ref text);
+
             emstrong(ref text, underline, bold);
 
             table(ref text);
+            text=trimemptyrows(text);
 
             codereput(ref text, ref codes, ref keys);
 
