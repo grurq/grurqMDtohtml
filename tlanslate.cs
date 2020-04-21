@@ -45,30 +45,73 @@ namespace MDtohtml
         }
         public string hn1_2(string txt)
         {
+            /* 2020/04/21　今時点でうまく行っていないもの　
+              string rtxt ="";
+            rtxt = Regex.Replace(txt, @"(^\r$)([\S]+.+\r$)(^[=]+\r$)(^\r$)", "<h1>$2</h1>",RegexOptions.Multiline);
+            rtxt = Regex.Replace(txt, @"(^\r$)([\S]+.+\r$)(^[-]+\r$)(^\r$)", "<h2>$2</h2>",RegexOptions.Multiline);
+            rtxt = Regex.Replace(txt, @"(^\r\n$)([\S]+.+\r\n$)(^[=]+\r\n$)(^\r\n$)", "<h1>$2</h1>", RegexOptions.Singleline);
+            rtxt = Regex.Replace(txt, @"(^\r\n$)([\S]+.+\r\n$)(^[-]+\r\n$)(^\r\n$)", "<h2>$2</h2>", RegexOptions.Singleline);
 
-            string[] row = txt.Split(new char[] { '\n' });
-            
-            int h, i;
+            return (rtxt == txt) ? txt : rtxt;
+             
+             */
 
-            Regex[] hn = { new Regex(@"[=]+\r", RegexOptions.Multiline), new Regex(@"[-]+\r", RegexOptions.Multiline) };
+            //2020/04/21　今時点でうまく行っていないもの　
+            string[] row = txt.Split('\n');
 
-            for (i = 1; i < row.Length; i++)
+            int h, i, r;
+
+
+            Regex[] hn = {
+            new Regex(@"^\r", RegexOptions.Multiline),
+            new Regex(@"\S", RegexOptions.Multiline),
+             new Regex(@"^(=){1,}(\r)", RegexOptions.Multiline),
+             new Regex(@"^(-){1,}(\r)", RegexOptions.Multiline),
+             new Regex(@"^\r", RegexOptions.Multiline)};
+
+            r = 1;
+            h = 0;
+
+            for (i = 0; i < row.Length; i++)
             {
-                for (h = 0; h < hn.Length; h++)
+                if (r == 2)
                 {
-                    if (hn[h].IsMatch(row[i]) && Regex.IsMatch(row[i-1], @"\S",RegexOptions.Singleline))
+                    if (hn[2].IsMatch(row[i]))h = 1;
+                    if (hn[3].IsMatch(row[i])) h = 2;
+                    r = (h > 0) ? 4:0;
+                }
+                else
+                {
+                    r = (hn[r].IsMatch(row[i])) ? r + 1 : 0;
+                    if (r == 4) h++;
+                    if (r == 5)
                     {
+                        //変換
+                        if(i>2)row[i - 3] = "";
+                        row[i - 2] = "<h" + h.ToString() + ">\r" + row[i - 2];
+                        row[i - 2] = row[i - 2].Insert(row[i - 2].Length - 1, "</h" + h.ToString() + ">\r");
+                        row[i - 1] = "";
+                        row[i] = "";
 
-                        row[i] = "\r";
-                        row[i - 1] = "<h" + h.ToString() + ">" + row[i - 1];
-                        row[i - 1] = row[i - 1].Insert(row[i - 1].Length - 1, "</h" + h.ToString() + ">\r");
+                        r = 0;
                     }
+                    if (r == 0) h = 0;
                 }
             }
-            for (i = 1; i < row.Length; i++) row[0] += "\n" + row[i];
 
 
-            return row[0] + "\n";
+            for (i = 0; i < row.Length; i++)
+            {
+                if (row[i].EndsWith("\r")) row[i] += "\n";
+                if (i > 0) row[0] += row[i];
+            }
+
+
+
+            return row[0];
+             
+             
+
         }
         public void hn(ref string txt)
         {
@@ -574,17 +617,18 @@ namespace MDtohtml
 
             // 下記の順番は意味を持つ。ずらさないこと。
             code(ref text, ref codes, ref keys);
-            urlorimg(ref text);
-
             hn(ref text);
             text = hn1_2(text);
-            hr(ref text);
+            
 
+
+            urlorimg(ref text);
             p(ref text);
             br(ref text);
             blockquote(ref text);
+            hr(ref text);
 
-            while(ulol(ref text));
+            while (ulol(ref text));
 
 
             emstrong(ref text, underline, bold);
