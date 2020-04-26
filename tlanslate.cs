@@ -143,11 +143,20 @@ namespace MDtohtml
         public void hr(ref string txt)
         {
             string[] pattern = { "(-)", "(- )", "(_)", "(_ )", "(\\*)", "(\\* )" };
-
-            for (int i = 0; i < 6; i++)
+            string newtxt = "";
+            for(int h = 0; h < 2; h++)
             {
-                txt = Regex.Replace(txt, @pattern[i] + "{3,}(\r\n)", "<hr>$2", RegexOptions.Multiline);
+                for (int i = 0; i < 6; i++)
+                {
+                    txt = (i % 2 == 0) ? Regex.Replace(txt, pattern[i] + "{3,}\r\n", "<hr>\r\n", RegexOptions.Multiline)
+                        : Regex.Replace(txt, pattern[i] + "{2,}" + pattern[i - 1] + " ?\r\n", "<hr>\r\n", RegexOptions.Multiline);
+                }
+                newtxt = txt;
+                if(h==0)txt += "\r\n";
             }
+            if (newtxt + "\r\n" == txt) txt = newtxt;
+            
+            
 
         }
         public void emstrong(ref string txt, bool underline, bool bold)
@@ -264,7 +273,7 @@ namespace MDtohtml
             string[] row = txt.Split('\n');
             bool block1, block2,replaced;
             replaced = false;
-            string[] rgxkey = { "(\\d{1,}\\. )", "(- )", "^(    )", "^(\t)" };
+            string[] rgxkey = { "(\\d{1,}\\. )", "(- |\\* |\\+ )", "^(    )", "^(\t)" };
 
             string[] rgxtag = { "<ol>", "<ul>", "</ol>", "</ul>" };
 
@@ -279,7 +288,7 @@ namespace MDtohtml
                     {
 
                         case false:
-                            if (Regex.IsMatch(row[i], "^(\\d{1,}\\. |- )"))
+                            if (Regex.IsMatch(row[i], @"^(\d{1,}\. |- |\* |\+ )"))
                             {
                                 for (h = 0; h < 2; h++)
                                 {
@@ -296,7 +305,7 @@ namespace MDtohtml
                                     }
                                 }
                             }
-                            if (Regex.IsMatch(row[i], @"^(\s+)(\d{1,}\. |- )"))
+                            if (Regex.IsMatch(row[i], @"^(\s+)(\d{1,}\. |- |\* |\+ )"))
                             {
 
                                 if(row[i].StartsWith("\t"))row[i] ="   "+ row[i].Substring(1,row[i].Length-1);
@@ -311,7 +320,7 @@ namespace MDtohtml
                             {
                                 row[i] = Regex.Replace(row[i], "^" + rgxkey[rgx] + "(.+)", "<li>$2</li>\r");
                             }
-                            else if (Regex.IsMatch(row[i], @"^(\s+)(\d{1,}\. |- )"))
+                            else if (Regex.IsMatch(row[i], @"^(\s+)(\d{1,}\. |- |\* |\+ )"))
                             {
                                 if (row[i].StartsWith("\t")) row[i] = "   " + row[i].Substring(1, row[i].Length - 1);
                                 if (row[i].StartsWith(" ")) row[i] = row[i].Substring(1, row[i].Length - 1);

@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.updated = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -64,7 +65,6 @@
             this.radioButtonhtm = new System.Windows.Forms.RadioButton();
             this.radioButtonhtml = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.updated = new System.Windows.Forms.Label();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -95,6 +95,15 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "概要";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // updated
+            // 
+            this.updated.AutoSize = true;
+            this.updated.Location = new System.Drawing.Point(46, 54);
+            this.updated.Name = "updated";
+            this.updated.Size = new System.Drawing.Size(45, 12);
+            this.updated.TabIndex = 11;
+            this.updated.Text = "updated";
             // 
             // label4
             // 
@@ -428,7 +437,7 @@
             this.groupBox1.Controls.Add(this.radioButtonhtml);
             this.groupBox1.Location = new System.Drawing.Point(19, 17);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(393, 45);
+            this.groupBox1.Size = new System.Drawing.Size(391, 45);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "htmlファイルの修飾子";
@@ -479,15 +488,6 @@
             this.tabControl1.Size = new System.Drawing.Size(433, 306);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 8;
-            // 
-            // updated
-            // 
-            this.updated.AutoSize = true;
-            this.updated.Location = new System.Drawing.Point(46, 54);
-            this.updated.Name = "updated";
-            this.updated.Size = new System.Drawing.Size(45, 12);
-            this.updated.TabIndex = 11;
-            this.updated.Text = "updated";
             // 
             // Form1
             // 
