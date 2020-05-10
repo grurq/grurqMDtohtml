@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MDtohtml.Properties {
+namespace RenametoDate.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,145 +25,37 @@ namespace MDtohtml.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool sjis {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool make {
             get {
-                return ((bool)(this["sjis"]));
+                return ((bool)(this["make"]));
             }
             set {
-                this["sjis"] = value;
+                this["make"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool underline {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool front {
             get {
-                return ((bool)(this["underline"]));
+                return ((bool)(this["front"]));
             }
             set {
-                this["underline"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool bold {
-            get {
-                return ((bool)(this["bold"]));
-            }
-            set {
-                this["bold"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool texttlanslation {
-            get {
-                return ((bool)(this["texttlanslation"]));
-            }
-            set {
-                this["texttlanslation"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool nocopy {
-            get {
-                return ((bool)(this["nocopy"]));
-            }
-            set {
-                this["nocopy"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool newfile {
-            get {
-                return ((bool)(this["newfile"]));
-            }
-            set {
-                this["newfile"] = value;
+                this["front"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string newfileadd {
+        public string label {
             get {
-                return ((string)(this["newfileadd"]));
+                return ((string)(this["label"]));
             }
             set {
-                this["newfileadd"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool htm {
-            get {
-                return ((bool)(this["htm"]));
-            }
-            set {
-                this["htm"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("<html>\r\n<title>\r\n\r\n</title>\r\n<body>")]
-        public string headertext {
-            get {
-                return ((string)(this["headertext"]));
-            }
-            set {
-                this["headertext"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("</body>\r\n</html>")]
-        public string footertext {
-            get {
-                return ((string)(this["footertext"]));
-            }
-            set {
-                this["footertext"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool hdfton {
-            get {
-                return ((bool)(this["hdfton"]));
-            }
-            set {
-                this["hdfton"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool encchange {
-            get {
-                return ((bool)(this["encchange"]));
-            }
-            set {
-                this["encchange"] = value;
+                this["label"] = value;
             }
         }
     }

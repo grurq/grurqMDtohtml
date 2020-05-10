@@ -1,6 +1,6 @@
-﻿namespace RemotetoDate.Properties {
-    
-    
+﻿namespace RenametoDate.Properties {
+
+
     // このクラスでは設定クラスでの特定のイベントを処理することができます:
     //  SettingChanging イベントは、設定値が変更される前に発生します。
     //  PropertyChanged イベントは、設定値が変更された後に発生します。
@@ -11,7 +11,7 @@
         public Settings() {
             // // 設定の保存と変更のイベント ハンドラーを追加するには、以下の行のコメントを解除します:
             //
-            // this.SettingChanging += this.SettingChangingEventHandler;
+            //this.SettingChanging += this.SettingChangingEventHandler;
             //
             // this.SettingsSaving += this.SettingsSavingEventHandler;
             //
