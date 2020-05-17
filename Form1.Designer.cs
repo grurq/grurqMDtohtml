@@ -499,6 +499,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "grurqMDtohtml の設定";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();

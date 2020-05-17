@@ -45,16 +45,6 @@ namespace MDtohtml
         }
         public string hn1_2(string txt)
         {
-            /* 2020/04/21　今時点でうまく行っていないもの　
-              string rtxt ="";
-            rtxt = Regex.Replace(txt, @"(^\r$)([\S]+.+\r$)(^[=]+\r$)(^\r$)", "<h1>$2</h1>",RegexOptions.Multiline);
-            rtxt = Regex.Replace(txt, @"(^\r$)([\S]+.+\r$)(^[-]+\r$)(^\r$)", "<h2>$2</h2>",RegexOptions.Multiline);
-            rtxt = Regex.Replace(txt, @"(^\r\n$)([\S]+.+\r\n$)(^[=]+\r\n$)(^\r\n$)", "<h1>$2</h1>", RegexOptions.Singleline);
-            rtxt = Regex.Replace(txt, @"(^\r\n$)([\S]+.+\r\n$)(^[-]+\r\n$)(^\r\n$)", "<h2>$2</h2>", RegexOptions.Singleline);
-
-            return (rtxt == txt) ? txt : rtxt;
-             
-             */
 
             //2020/04/21　今時点でうまく行っていないもの　
             string[] row = txt.Split('\n');
@@ -214,53 +204,7 @@ namespace MDtohtml
             }
         }
 
-        public string ulol2(string txt)
-        {
-            //3段階以上のリスト化を可能にするためのメソッド
-            //基層メソッド
-            string[] row = txt.Split('\n');
 
-            string rplin = "";
-
-            int i, rpls;
-
-            rpls = -1;
-
-            for (i = 0; i < row.Length; i++)
-            {
-                if (Regex.IsMatch(row[i], "^(\\d{1,}\\. |- )"))
-                {
-
-
-                    rplin += row[i] + "\n";
-                    row[i] = "";
-                    rpls = i;
-                }
-                if (rplin.Length > 0)
-                {
-                    if (Regex.IsMatch(row[i], "^((\t| )*(\\d{1,}\\. |- ))"))
-                    {
-                        rplin += row[i] + "\n";
-                        row[i] = "";
-                    }
-                    else
-                    {
-                        while(ulol(ref rplin));
-                        row[rpls] = rplin;
-                        
-                        rplin = "";
-
-                    }
-
-                }
-            }
-            for (i = 0; i < row.Length; i++)
-            {
-                if (row[i].EndsWith("\r")) row[i] += "\n";
-                if (i > 0) row[0] += row[i];
-            }
-            return row[0];
-        }
         public bool ulol(ref string txt)
         {
             int h, i,rgx, stt, stp;
@@ -356,15 +300,7 @@ namespace MDtohtml
             return replaced;
 
         }
-        public void insli(ref string[] text, string sptxt, int strow, int endrow)
-        {
-            string[] row = sptxt.Split(new string[] { "\r\n" }, StringSplitOptions.None);
 
-            for (int i = strow; i < endrow; i++)
-            {
-                text[strow] = row[i - strow] + "\r\n";
-            }
-        }
         public void blockquote(ref string txt)
         {
             int i, stt, stp;

@@ -20,8 +20,7 @@ namespace MDtohtml
         private void Ending(object sender, EventArgs e)
         {
 
-            Properties.Settings.Default.Save();
-            Application.ApplicationExit -= new EventHandler(Ending);
+
 
         }
 
@@ -130,10 +129,7 @@ namespace MDtohtml
                 }
                 this.Close();
             }
-            else
-            {
-                Application.ApplicationExit += new EventHandler(this.Ending);
-            }
+
         }
 
         private void groupBox2_Enter(object sender, EventArgs e)
@@ -145,7 +141,7 @@ namespace MDtohtml
         {
 
             if (radioButtonUTF8.Checked) { Properties.Settings.Default.sjis = false; } else { Properties.Settings.Default.sjis = true; }
-            Properties.Settings.Default.Save();
+           
         }
 
         private void checkBoxhf_CheckedChanged(object sender, EventArgs e)
@@ -156,11 +152,8 @@ namespace MDtohtml
 
             textBoxfooter.ReadOnly = !(checkBoxhf.Checked);
             textBoxheader.ReadOnly = !(checkBoxhf.Checked);
-
-            if (checkBoxhf.Checked) {
-                Properties.Settings.Default.Save();
-            } 
-            else if(textBoxheader.Text != Properties.Settings.Default.headertext|| textBoxfooter.Text != Properties.Settings.Default.footertext)
+        
+            if (!checkBoxhf.Checked &&(textBoxheader.Text != Properties.Settings.Default.headertext|| textBoxfooter.Text != Properties.Settings.Default.footertext))
                 {
                     DialogResult dr=
                     MessageBox.Show("文が変更されています。\r\n保存しますか？", "確認",MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
@@ -169,7 +162,7 @@ namespace MDtohtml
                     case DialogResult.OK:
                         Properties.Settings.Default.headertext = textBoxheader.Text;
                         Properties.Settings.Default.footertext = textBoxfooter.Text;
-                        Properties.Settings.Default.Save();
+                        
                         break;
                     default:
                         textBoxheader.Text = Properties.Settings.Default.headertext;
@@ -193,13 +186,13 @@ namespace MDtohtml
         {
             Properties.Settings.Default.headertext= textBoxheader.Text ;
              Properties.Settings.Default.footertext= textBoxfooter.Text;
-            Properties.Settings.Default.Save();
+           
         }
 
         private void checkBoxnotcopy_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.nocopy = checkBoxnotcopy.Checked;
-            Properties.Settings.Default.Save();
+           
         }
     
 
@@ -207,7 +200,7 @@ namespace MDtohtml
         private void radioButtonhtml_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonhtml.Checked) { Properties.Settings.Default.htm = false; } else { Properties.Settings.Default.htm = true; }
-            Properties.Settings.Default.Save();
+           
         }
 
         private void radioButtonsjis_CheckedChanged(object sender, EventArgs e)
@@ -224,14 +217,9 @@ namespace MDtohtml
         private void radioButtonstrong_CheckedChanged(object sender, EventArgs e)
         {
             if (radioButtonstrong.Checked) { Properties.Settings.Default.bold = false; } else { Properties.Settings.Default.bold = true; }
-            Properties.Settings.Default.Save();
+           
         }
 
-        private void checkBoxenc_CheckedChanged(object sender, EventArgs e)
-        {
-            //Properties.Settings.Default.encchange= checkBoxenc.Checked;
-            Properties.Settings.Default.Save();
-        }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -256,6 +244,11 @@ namespace MDtohtml
         private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabel5.Links[0].LinkData.ToString());
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }
