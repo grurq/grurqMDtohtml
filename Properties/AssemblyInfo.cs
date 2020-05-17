@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // 制御されます。アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更します。
 [assembly: AssemblyTitle("grurqRenametoDate")]
-[assembly: AssemblyDescription("ドラッグ＆ドロップ方式で動作するMakdown変換プログラム")]
+[assembly: AssemblyDescription("ドラッグ＆ドロップ方式で動作するファイル名変更プログラム")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("grurqApps")]
 [assembly: AssemblyProduct("grurqRenametoDate")]
@@ -33,6 +33,6 @@ using System.Runtime.InteropServices;
 // すべての値を指定するか、次を使用してビルド番号とリビジョン番号を既定に設定できます
 // 既定値にすることができます:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.1")]
 [assembly: NeutralResourcesLanguage("ja-JP")]

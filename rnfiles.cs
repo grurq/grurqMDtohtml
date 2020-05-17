@@ -32,7 +32,7 @@ namespace RenametoDate
 		{
 			int i,j;
             string newname;
-            //for (i=0;i<nfn.Count;i++)if(File.Exists(this.folder+nfn[i]))return false;
+            
 			if(MessageBox.Show("ファイル名を変更してよろしいですか？","確認",MessageBoxButtons.OKCancel,MessageBoxIcon.Warning,MessageBoxDefaultButton.Button2) == DialogResult.Cancel) return false;
 
             for (i = 0; i < nfn.Count; i++) { 
@@ -56,23 +56,18 @@ namespace RenametoDate
             if (files.Length <= 1) return false;
 			if (posdr(files[1])<0)return false;
 
-            
-            
-
-
 
             this.folder =files[1].Substring(0,posdr(files[1]));
 
             this.ffn.Clear();
             this.nfn.Clear();
-            //this.fnames.Clear();
-
+            
 
             FileInfo rfile;
-            string name,DC;
+            string name;
             name = "";
            
-            DC = "D"+files.Length.ToString().Length.ToString();
+           
 
             int i;
             
@@ -90,13 +85,10 @@ namespace RenametoDate
                 name += rfile.Extension;
 
 
-                //name += "_" + i.ToString("DC");
                 ffn.Add(rfile.Name);
                 nfn.Add(name);
  
 
-                //this.fnames.Add(rfile.Name, name);
-                //DC = rfile.Name;
 
             }
             // デバッグ用 /* 
